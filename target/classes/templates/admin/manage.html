@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{commons/commons::head}"></div>
+<body>
+
+<!-- preloader area start -->
+<div class="preloader" id="preloader">
+    <div class="preloader-inner">
+        <div class="spinner">
+            <div class="dot1"></div>
+            <div class="dot2"></div>
+        </div>
+    </div>
+</div>
+<!-- search popup area start -->
+<div class="search-popup" id="search-popup">
+    <form action="../index.html" class="search-form">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search.....">
+        </div>
+        <button type="submit" class="submit-btn"><i class="fa fa-search"></i></button>
+    </form>
+</div>
+<!-- //. search Popup -->
+<div class="body-overlay" id="body-overlay"></div>
+
+<!-- topbar end-->
+<div class="topbar-area">
+    <div th:replace="~{commons/admin-commons::topbarend}"></div>
+</div>
+<!-- topbar end-->
+
+
+
+<!-- navbar start -->
+<div class="navbar-area">
+    <div th:insert="~{commons/admin-commons::topbar}"></div>
+</div>
+<!-- navbar end -->
+
+<!-- contact area Start -->
+<div class="contact-area pd-top-50 pd-bottom-80">
+    <div class="container">
+        <div class="row">
+                <div class="breadcrumb-inner">
+                    <i class="fa fa-home"></i>
+                    <ul class="page-list">
+                        <li><a href="@{index.html">主页</a></li>
+                        <li>书籍管理</li>
+                    </ul>
+                </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <main role="main" class="col-md-12 ml-sm-auto col-lg-13 pt-3 px-4">
+                        <div class="layui-row">
+                            <div class="layui-col-xs3"><a class="btn btn-sm btn-success" th:href="@{/toAddBook}" >添加书籍</a></div>
+                            <div class="layui-col-xs9">
+                                <div class="layui-col-xs4">
+                                    <form th:action="@{/adminToSeachBookisbn}" method="post" class="search-form">
+                                        <div class="layui-col-xs3">
+                                            <label class="col-sm-2 control-label">ISBN：</label>
+                                        </div>
+                                        <div class="layui-col-xs6">
+                                            <input type="text" class="form-control" th:placeholder="${sisbn ne null}?${sisbn}:'Search.....'" name="isbn">
+                                        </div>
+                                        <div class="layui-col-xs1 offset-1" >
+                                            <button type="submit" class="layui-btn layui-btn-sm">查找</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="layui-col-xs4 offset-1">
+                                    <form th:action="@{/adminToSeachBook}" method="post" class="search-form">
+                                        <div class="layui-col-xs2">
+                                            <label class="col-sm-2 control-label">其他：</label>
+                                        </div>
+                                        <div class="layui-col-xs6">
+                                            <input type="text" class="form-control" th:placeholder="${sname ne null}?${sname}:'Search.....'" name="name">
+                                        </div>
+                                        <div class="layui-col-xs1 offset-1" >
+                                            <button type="submit" class="layui-btn layui-btn-sm">查找</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+
+                            <div class="table-responsive">
+                                <table class="table table-striped table-sm">
+                                    <thead>
+                                    <tr>
+                                        <th>编号</th>
+                                        <th>ISBN</th>
+                                        <th>名称</th>
+                                        <th>作者</th>
+                                        <th>出版社</th>
+                                        <th>销售数</th>
+                                        <th>价格</th>
+                                        <th>图像</th>
+                                        <th>分类号</th>
+                                        <th>分类名</th>
+                                        <th>出版时间</th>
+                                        <th>概要</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="b:${catchbook}">
+                                        <td th:text="${b.getBook_id()}"> </td>
+                                        <td th:text="${b.getBook_isbn()}"> </td>
+                                        <td th:text="${b.getBook_name()}"> </td>
+                                        <td th:text="${b.getBook_author()}"> </td>
+                                        <td th:text="${b.getBook_pub()}"> </td>
+                                        <td th:text="${b.getBook_num()}"> </td>
+                                        <td th:text="${b.getBook_price()}"> </td>
+                                        <td th:text="${b.getBook_image()}"> </td>
+                                        <td th:text="${b.getSort_id()}"> </td>
+                                        <td th:text="${b.getSort_name()}"> </td>
+                                        <td th:text="${b.getBook_time()}"> </td>
+                                        <td th:text="${#strings.abbreviate(b.getBook_outline(),20)}"> </td>
+                                        <td>
+                                            <a class="layui-btn layui-btn-sm" th:href="@{/toUpBook/{id}(id=${b.getBook_id()})}">编辑<i class="layui-icon layui-icon-edit"></i></a>
+                                            <a class="layui-btn layui-btn-sm layui-btn-danger"  th:href="@{/toDelBook/{id}(id=${b.getBook_id()})}">删除<i class="layui-icon layui-icon-delete"></i></a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                    </main>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+<!-- contact area End -->
+
+
+
+<!--测试-->
+<!--<div>-->
+<!--<div class="contact-area pd-top-50 pd-bottom-80">-->
+    <!--<div class="container">-->
+        <!--<div class="row">-->
+            <!--<div class="breadcrumb-inner">-->
+                <!--<i class="fa fa-home"></i>-->
+                <!--<ul class="page-list">-->
+                    <!--<li><a href="@{index.html">主页</a></li>-->
+                    <!--<li>书籍管理</li>-->
+                <!--</ul>-->
+            <!--</div>-->
+            <!--<div class="container-fluid">-->
+                <!--<div class="row">-->
+                    <!--<main role="main" class="col-md-12 ml-sm-auto col-lg-13 pt-3 px-4">-->
+                        <!--<h2 ><a class="btn btn-sm btn-success" th:href="@{/toAddBook}" >添加书籍</a></h2>-->
+                        <!--<div class="table-responsive">-->
+<!--<div style="margin-bottom: 5px;">-->
+
+    <!--&lt;!&ndash; 示例-970 &ndash;&gt;-->
+    <!--<ins class="adsbygoogle" style="display:inline-block;width:970px;height:90px" data-ad-client="ca-pub-6111334333458862" data-ad-slot="3820120620"></ins>-->
+
+<!--</div>-->
+
+<!--<div class="layui-btn-group demoTable">-->
+    <!--<button class="layui-btn" data-type="getCheckData">获取选中行数据</button>-->
+    <!--<button class="layui-btn" data-type="getCheckLength">获取选中数目</button>-->
+    <!--<button class="layui-btn" data-type="isAll">验证是否全选</button>-->
+<!--</div>-->
+
+<!--<table class="layui-table" lay-data="{width: 1000, height:330, url:'/adminlayuibook', page:true, id:'idTest'}" lay-filter="demo">-->
+    <!--<thead>-->
+    <!--<tr>-->
+        <!--<th lay-data="{type:'checkbox', fixed: 'left'}"></th>-->
+        <!--<th lay-data="{field:'book_id', width:80, sort: true, fixed: true}">编号</th>-->
+        <!--<th lay-data="{field:'book_isbn', width:80, sort: true}">ISBN</th>-->
+        <!--<th lay-data="{field:'book_name', width:80}">名称</th>-->
+        <!--<th lay-data="{field:'book_author', width:80}">作者</th>-->
+        <!--<th lay-data="{field:'book_pub', width:160}">出版社</th>-->
+        <!--<th lay-data="{field:'book_num', width:80, sort: true}">销售数</th>-->
+        <!--<th lay-data="{field:'book_price', width:80, sort: true}">价格</th>-->
+        <!--<th lay-data="{field:'book_image', width:135}">图像</th>-->
+        <!--<th lay-data="{field:'sort_id', width:80, sort: true}">分类号</th>-->
+        <!--<th lay-data="{field:'sort_name', width:80}">分类名</th>-->
+        <!--<th lay-data="{field:'book_time', width:80, sort: true}">出版时间</th>-->
+        <!--<th lay-data="{field:'book_outline', width:80}">概要</th>-->
+        <!--<th lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}"></th>-->
+    <!--</tr>-->
+    <!--</thead>-->
+<!--</table><div class="layui-form layui-border-box layui-table-view" lay-filter="LAY-table-1" lay-id="idTest" style="width:892px; height:330px;"><div class="layui-table-box"><div class="layui-table-init" style="background-color: #fff;"><i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop"></i></div><div class="layui-table-header"><table cellspacing="0" cellpadding="0" border="0" class="layui-table"><thead><tr><th data-field="0" data-key="1-0-0" data-unresize="true" class=" layui-table-col-special"><div class="layui-table-cell laytable-cell-1-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary" lay-filter="layTableAllChoose"></div></th><th data-field="id" data-key="1-0-1" class=" layui-unselect"><div class="layui-table-cell laytable-cell-1-0-1"><span>ID</span><span class="layui-table-sort layui-inline"><i class="layui-edge layui-table-sort-asc" title="升序"></i><i class="layui-edge layui-table-sort-desc" title="降序"></i></span></div></th><th data-field="username" data-key="1-0-2" class=""><div class="layui-table-cell laytable-cell-1-0-2"><span>用户名</span></div></th><th data-field="sex" data-key="1-0-3" class=" layui-unselect"><div class="layui-table-cell laytable-cell-1-0-3"><span>性别</span><span class="layui-table-sort layui-inline"><i class="layui-edge layui-table-sort-asc" title="升序"></i><i class="layui-edge layui-table-sort-desc" title="降序"></i></span></div></th><th data-field="city" data-key="1-0-4" class=""><div class="layui-table-cell laytable-cell-1-0-4"><span>城市</span></div></th><th data-field="sign" data-key="1-0-5" class=""><div class="layui-table-cell laytable-cell-1-0-5"><span>签名</span></div></th><th data-field="experience" data-key="1-0-6" class=" layui-unselect"><div class="layui-table-cell laytable-cell-1-0-6"><span>积分</span><span class="layui-table-sort layui-inline"><i class="layui-edge layui-table-sort-asc" title="升序"></i><i class="layui-edge layui-table-sort-desc" title="降序"></i></span></div></th><th data-field="classify" data-key="1-0-7" class=""><div class="layui-table-cell laytable-cell-1-0-7"><span>职业</span></div></th><th data-field="wealth" data-key="1-0-8" class=" layui-unselect"><div class="layui-table-cell laytable-cell-1-0-8"><span>财富</span><span class="layui-table-sort layui-inline"><i class="layui-edge layui-table-sort-asc" title="升序"></i><i class="layui-edge layui-table-sort-desc" title="降序"></i></span></div></th><th data-field="score" data-key="1-0-9" class=" layui-unselect"><div class="layui-table-cell laytable-cell-1-0-9"><span>评分</span><span class="layui-table-sort layui-inline"><i class="layui-edge layui-table-sort-asc" title="升序"></i><i class="layui-edge layui-table-sort-desc" title="降序"></i></span></div></th><th data-field="10" data-key="1-0-10" class=" layui-table-col-special"><div class="layui-table-cell laytable-cell-1-0-10" align="center"><span></span></div></th></tr></thead></table></div><div class="layui-table-body layui-table-main" style="height: 248px;"><table cellspacing="0" cellpadding="0" border="0" class="layui-table"><tbody></tbody></table></div><div class="layui-table-fixed layui-table-fixed-l"><div class="layui-table-header"><table cellspacing="0" cellpadding="0" border="0" class="layui-table"><thead><tr><th data-field="0" data-key="1-0-0" data-unresize="true" class=" layui-table-col-special"><div class="layui-table-cell laytable-cell-1-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary" lay-filter="layTableAllChoose"></div></th><th data-field="id" data-key="1-0-1" class=" layui-unselect"><div class="layui-table-cell laytable-cell-1-0-1"><span>ID</span><span class="layui-table-sort layui-inline"><i class="layui-edge layui-table-sort-asc" title="升序"></i><i class="layui-edge layui-table-sort-desc" title="降序"></i></span></div></th></tr></thead></table></div><div class="layui-table-body"><table cellspacing="0" cellpadding="0" border="0" class="layui-table"><tbody></tbody></table></div></div><div class="layui-table-fixed layui-table-fixed-r"><div class="layui-table-header"><table cellspacing="0" cellpadding="0" border="0" class="layui-table"><thead><tr><th data-field="score" data-key="1-0-9" class=" layui-unselect"><div class="layui-table-cell laytable-cell-1-0-9"><span>评分</span><span class="layui-table-sort layui-inline"><i class="layui-edge layui-table-sort-asc" title="升序"></i><i class="layui-edge layui-table-sort-desc" title="降序"></i></span></div></th><th data-field="10" data-key="1-0-10" class=" layui-table-col-special"><div class="layui-table-cell laytable-cell-1-0-10" align="center"><span></span></div></th></tr></thead></table><div class="layui-table-mend"></div></div><div class="layui-table-body"><table cellspacing="0" cellpadding="0" border="0" class="layui-table"><tbody></tbody></table></div></div><div class="layui-table-init"><i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop"></i></div></div><div class="layui-table-page"><div id="layui-table-page1"></div></div><style>.laytable-cell-1-0-0{ width: 48px; }.laytable-cell-1-0-1{ width: 80px; }.laytable-cell-1-0-2{ width: 80px; }.laytable-cell-1-0-3{ width: 80px; }.laytable-cell-1-0-4{ width: 80px; }.laytable-cell-1-0-5{ width: 160px; }.laytable-cell-1-0-6{ width: 80px; }.laytable-cell-1-0-7{ width: 80px; }.laytable-cell-1-0-8{ width: 135px; }.laytable-cell-1-0-9{ width: 80px; }.laytable-cell-1-0-10{ width: 178px; }</style></div>-->
+
+<!--<script type="text/html" id="barDemo">-->
+    <!--<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>-->
+    <!--<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>-->
+    <!--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
+<!--</script>-->
+                        <!--</div>-->
+                    <!--</main>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 &ndash;&gt;-->
+<!--<script>-->
+    <!--layui.use('table', function(){-->
+        <!--var table = layui.table;-->
+        <!--//监听表格复选框选择-->
+        <!--table.on('checkbox(demo)', function(obj){-->
+            <!--console.log(obj)-->
+        <!--});-->
+        <!--//监听工具条-->
+        <!--table.on('tool(demo)', function(obj){-->
+            <!--var data = obj.data;-->
+            <!--if(obj.event === 'detail'){-->
+                <!--layer.msg('ID：'+ data.id + ' 的查看操作');-->
+            <!--} else if(obj.event === 'del'){-->
+                <!--layer.confirm('真的删除行么', function(index){-->
+                    <!--obj.del();-->
+                    <!--layer.close(index);-->
+                <!--<a href="@{/toDelBook/{id}(id=${b.getBook_id()})}"></a>-->
+
+                <!--});-->
+            <!--} else if(obj.event === 'edit'){-->
+                <!--layer.alert('编辑行：<br>'+ JSON.stringify(data))-->
+            <!--}-->
+        <!--});-->
+
+        <!--var $ = layui.$, active = {-->
+            <!--getCheckData: function(){ //获取选中数据-->
+                <!--var checkStatus = table.checkStatus('idTest')-->
+                    <!--,data = checkStatus.data;-->
+                <!--layer.alert(JSON.stringify(data));-->
+            <!--}-->
+            <!--,getCheckLength: function(){ //获取选中数目-->
+                <!--var checkStatus = table.checkStatus('idTest')-->
+                    <!--,data = checkStatus.data;-->
+                <!--layer.msg('选中了：'+ data.length + ' 个');-->
+            <!--}-->
+            <!--,isAll: function(){ //验证是否全选-->
+                <!--var checkStatus = table.checkStatus('idTest');-->
+                <!--layer.msg(checkStatus.isAll ? '全选': '未全选')-->
+            <!--}-->
+        <!--};-->
+
+        <!--$('.demoTable .layui-btn').on('click', function(){-->
+            <!--var type = $(this).data('type');-->
+            <!--active[type] ? active[type].call(this) : '';-->
+        <!--});-->
+    <!--});-->
+<!--</script>-->
+<!--</div>-->
+
+
+
+
+<!--测试-->
+
+
+
+<!-- back to top area start -->
+<div class="back-to-top">
+    <span class="back-top"><i class="fa fa-angle-double-up"></i></span>
+</div>
+<!-- back to top area end -->
+
+
+<!-- all plugins here -->
+<div th:replace="~{commons/commons::js}"></div>
+</body>
+</html>

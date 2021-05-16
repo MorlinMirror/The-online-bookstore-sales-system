@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{commons/commons::head}"></div>
+<body>
+
+<!-- preloader area start -->
+<div class="preloader" id="preloader">
+    <div class="preloader-inner">
+        <div class="spinner">
+            <div class="dot1"></div>
+            <div class="dot2"></div>
+        </div>
+    </div>
+</div>
+<!-- search popup area start -->
+<div class="search-popup" id="search-popup">
+    <form action="../index.html" class="search-form">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search.....">
+        </div>
+        <button type="submit" class="submit-btn"><i class="fa fa-search"></i></button>
+    </form>
+</div>
+<!-- //. search Popup -->
+<div class="body-overlay" id="body-overlay"></div>
+
+<!-- topbar end-->
+<div class="topbar-area">
+    <div th:replace="~{commons/admin-commons::topbarend}"></div>
+</div>
+<!-- topbar end-->
+
+
+
+<!-- navbar start -->
+<div class="navbar-area">
+    <div th:insert="~{commons/admin-commons::topbar}"></div>
+</div>
+<!-- navbar end -->
+
+<!-- contact area Start -->
+<div class="contact-area pd-top-50 pd-bottom-80">
+    <div class="container">
+        <div class="row">
+            <div class="breadcrumb-inner">
+                <i class="fa fa-home"></i>
+                <ul class="page-list">
+                    <li><a href="@{index.html">主页</a></li>
+                    <li>修改书籍</li>
+                </ul>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                        <form th:action="@{/upBookSort}" method="post">
+                            <div class="form-group">
+                                <label for="id" class="col-sm-2 control-label">编号</label>
+                                <div class="col-sm-10">
+                                    <input readonly type="text" class="form-control" id="id" name="sort_id" th:value="${addsortbook.getSort_id()}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputname3" class="col-sm-2 control-label">名称</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="inputname3"
+                                           name="sort_name" th:value="${addsortbook.getSort_name()}" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-sm-2 control-label">图像</label>
+                                <div class="col-sm-10">
+                                    <button type="button" class="layui-btn" id="book_img_load" >修改图片
+                                    </button>
+                                    <div class="layui-upload-list">
+                                        <img width="50%" height="50%" class="layui-upload-img" id="demo1" th:src="${addsortbook.getSort_img()}">
+                                        <p id="demoText"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">修改</button>
+                            <button type="reset" class="btn layui-btn-danger">重置</button>
+
+
+                        </form>
+                    </main>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- contact area End -->
+
+
+
+<!-- back to top area start -->
+<div class="back-to-top">
+    <span class="back-top"><i class="fa fa-angle-double-up"></i></span>
+</div>
+<!-- back to top area end -->
+<script>
+    layui.use('upload', function(){
+        var $ = layui.jquery
+            ,upload = layui.upload;
+
+        //普通图片上传
+        var uploadInst = upload.render({
+            elem: '#book_img_load'
+            ,url: '/upPhotoSort/' //改成您自己的上传接口
+
+            ,before: function(obj){
+                //预读本地文件示例，不支持ie8
+                obj.preview(function(index, file, result){
+                    $('#demo1').attr('src', result); //图片链接（base64）
+                });
+            }
+            ,done: function(res){
+                //如果上传失败
+                if(res.code > 0){
+                    return layer.msg('上传失败');
+                }
+                //上传成功
+            }
+            ,error: function(){
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function(){
+                    uploadInst.upload();
+                });
+            }
+
+        });
+
+    });
+</script>
+
+<!-- all plugins here -->
+<div th:replace="~{commons/commons::js}"></div>
+</body>
+</html>

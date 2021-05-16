@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{commons/commons::head}"></div>
+<body>
+
+<div th:replace="~{commons/commons::search}"></div>
+
+    <!-- topbar end-->
+    <div class="topbar-area">
+        <div th:replace="~{commons/commons::topbarend}"></div>
+    </div>
+    <!-- topbar end-->
+
+
+
+    <!-- navbar start -->
+    <div class="navbar-area">
+        <div th:insert="~{commons/commons::topbar}"></div>
+    </div>
+    <!-- navbar end -->
+    
+    <!-- blog-category area Start -->
+    <div class="blog-category-area pd-top-50 pd-bottom-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-inner">
+                        <i class="fa fa-home"></i>
+                        <ul class="page-list">
+                            <div th:insert="~{commons/commons::headTipMain}"></div>
+                            <li>书籍种类</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="section-title pt-0">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h5 class="title">作品分类</h5>
+                    </div>
+                    <div class="col-sm-6 text-sm-right align-self-center">
+                        <h5><a th:href="@{/getBook/1}">([[${pbookSort.size()}]])</a></h5>
+                    </div>
+                </div>
+            </div>
+            <!--th:each="bs,bs1:${pbookSort}"-->
+            <div class="row" >
+                <div class="col-lg-3 col-md-6" th:each="bs,bs1:${pbookSort}" th:if="${bs1.index} lt 8">
+                    <div class="single-category-wrap">
+                        <div class="thumb">
+                            <img th:src="${bs.getSort_img()}" alt="img">
+                            <a th:href="@{/getBook/{id}(id=${bs.getSort_id()})}"><img src="/assets/img/fire.png" alt="img">[[${bs.getSort_name()}]]</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="btn-wrap text-center">
+                        <a class="btn btn-main" th:href="@{/getBook/{id}(id=1)}">查看更多</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+    <!-- blog-category area End -->
+
+    <!--热销榜单-->
+    <div class="blog-category-area bg-gray pd-top-70 pd-bottom-80">
+        <div class="container">
+            <div class="section-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h5 class="title">热销榜单</h5>
+                    </div>
+                    <div class="col-sm-6 text-sm-right align-self-center">
+                        <h5><a th:href="@{/getBook/1}" >([[${pbooksAll.size()}]])</a></h5>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+
+                <div class="col-lg-4 col-md-6" th:each="b,b1:${pbooksAll}" th:if="${b1.index} lt 9">
+                    <div class="single-post-wrap"  >
+                        <div class="thumb">
+                            <a th:href="@{/getOneBook/{id}(id=${b.getBook_id()})}"><img width="100%" height="100%"  th:src="${b.getBook_image()}"  alt="这里是图片"></a>
+                            <a class="tag" th:href="@{/getBook/{id}(id=${b.getSort_id()})}" th:text="${b.getSort_name()}">类型标签</a>
+                        </div>
+                        <h6><a th:href="@{/getOneBook/{id}(id=${b.getBook_id()})}">《[[${b.getBook_name()}]]》:[[${#strings.abbreviate(b.getBook_outline(),72)}]]</a></h6>
+                        <!--th:each="books:${book}" th:text="${books.getBook_name}"-->
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="btn-wrap text-center">
+                        <a class="btn btn-main" th:href="@{/getBook/{id}(id=1)}">查看更多</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- back to top area start -->
+    <div class="back-to-top">
+        <span class="back-top"><i class="fa fa-angle-double-up"></i></span>
+    </div>
+    <!-- back to top area end -->
+
+
+    <!-- all plugins here -->
+    <div th:replace="~{commons/commons::js}"></div>
+</body>
+</html>

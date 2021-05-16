@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="personal.moyilin.mapper.CartMapper">
+    <!--<resultMap id="v_cart" type="personal.moyilin.pojo.Cart">-->
+        <!--<result column="Count(t_cart.book_id)" jdbcType="BIGINT" property="count" />-->
+        <!--<result column="Sum(t_book.book_price)" jdbcType="DECIMAL" property="sum" />-->
+    <!--</resultMap>-->
+
+    <select id="allCart" resultType="Cart">
+        SELECT t.* FROM mylbooks.v_cart t
+                        LIMIT 501
+    </select>
+    <!--搜索一个用户所有购物车-->
+    <select id="cartByUid"  resultType="Cart" >
+        select * from v_cart where user_id =#{id}
+    </select>
+    <!--搜索一个用户一本书-->
+    <select id="cartById"  resultType="Cart" >
+        select * from v_cart where user_id =#{uid} and  book_id=#{id}
+    </select>
+
+    <!--****************购物车操作************************-->
+    <!--删除一个记录-->
+    <delete id="deleteCartOne" parameterType="int">
+        delete from t_cart where book_id =#{id} and user_id=#{uid}
+    </delete>
+    <!--删除用户全部数据-->
+    <delete id="deleteCart" parameterType="int">
+        delete from t_cart where user_id =#{id}
+    </delete>
+    <!--增加一个用户购物车一本书-->
+    <insert id="addCart" parameterType="int">
+        insert into t_cart (user_id,book_id,cart_num)
+        values(#{uid} ,#{id} ,1)
+    </insert>
+    <!--更新一个用户购物车一本书的数量-->
+    <update id="updateCartOne" parameterType="int">
+        update t_cart set cart_num = #{num}
+        where user_id = #{uid} and book_id = #{id}
+    </update>
+
+
+</mapper>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{commons/commons::head}"></div>
+<body>
+
+<div th:replace="~{commons/commons::search}"></div>
+
+<!-- topbar end-->
+<div class="topbar-area">
+    <div th:replace="~{commons/commons::topbarend}"></div>
+</div>
+<!-- topbar end-->
+
+
+
+<!-- navbar start -->
+<div class="navbar-area">
+    <div th:insert="~{commons/commons::topbar}"></div>
+</div>
+<!-- navbar end -->
+
+
+
+<!-- back to top area start -->
+<div class="back-to-top">
+    <span class="back-top"><i class="fa fa-angle-double-up"></i></span>
+</div>
+<!-- back to top area end -->
+
+
+<!-- all plugins here -->
+<div th:replace="~{commons/commons::js}"></div>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{commons/commons::head}"></div>
+<body>
+
+<!-- preloader area start -->
+<div class="preloader" id="preloader">
+    <div class="preloader-inner">
+        <div class="spinner">
+            <div class="dot1"></div>
+            <div class="dot2"></div>
+        </div>
+    </div>
+</div>
+<!-- search popup area start -->
+<div class="search-popup" id="search-popup">
+    <form action="../index.html" class="search-form">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search.....">
+        </div>
+        <button type="submit" class="submit-btn"><i class="fa fa-search"></i></button>
+    </form>
+</div>
+<!-- //. search Popup -->
+<div class="body-overlay" id="body-overlay"></div>
+
+<!-- topbar end-->
+<div class="topbar-area">
+    <div th:replace="~{commons/admin-commons::topbarend}"></div>
+</div>
+<!-- topbar end-->
+
+
+
+<!-- navbar start -->
+<div class="navbar-area">
+    <div th:insert="~{commons/admin-commons::topbar}"></div>
+</div>
+<!-- navbar end -->
+
+<!-- contact area Start -->
+<div class="contact-area pd-top-50 pd-bottom-80">
+    <div class="container">
+        <div class="row">
+                <div class="breadcrumb-inner">
+                    <i class="fa fa-home"></i>
+                    <ul class="page-list">
+                        <li><a href="@{index.html">主页</a></li>
+                        <li>添加用户</li>
+                    </ul>
+                </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                            <form th:action="@{/toAddUser}" method="post">
+                                <div class="form-group">
+                                    <label for="name" class="col-sm-2 control-label">昵称</label>
+                                    <div class="col-sm-10">
+                                        <input type="name" class="form-control" id="name" placeholder="name" name="user_name" required>
+                                    </div>
+                                </div>
+                                <!--<div class="form-group">-->
+                                    <!--<label for="inputsex3" class="col-sm-2 control-label">性别</label>-->
+                                    <!--<div class="col-sm-10">-->
+                                        <!--<input type="sex" class="form-control" id="inputsex3" placeholder="sex" name="user_sex">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <div class="form-group">
+                                    <!--<div class="input-group-prepend">-->
+                                        <!--<div class="input-group-text"><i class="fa fa-cog"></i></div>-->
+                                    <!--</div>-->
+                                    <select name="user_sex">
+                                        <option>性别</option>
+                                        <option value="男">男</option>
+                                        <option value="女">女</option>
+                                    </select>
+                                </div><br><br><br>
+                                <div class="form-group">
+                                    <label for="inputbirth3" class="col-sm-2 control-label">出生日期</label>
+                                    <div class="col-sm-10">
+                                        <input type="date" class="form-control" id="inputbirth3" placeholder="birth" name="user_birth">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputphone3" class="col-sm-2 control-label">电话号码</label>
+                                    <div class="col-sm-10">
+                                        <input type="phone" class="form-control" id="inputphone3" placeholder="phone" name="user_phone" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">邮箱</label>
+                                    <div class="col-sm-10">
+                                        <input type="email" class="form-control" id="inputemail3" placeholder="email" name="user_email">
+
+
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">图像</label>
+                                    <div class="col-sm-10">
+                                        <!--<input type="image" class="form-control" id="inputimage3" placeholder="image" name="user_image" >-->
+                                        <button type="button" class="layui-btn" id="book_img_load" >上传头像</button>
+                                        <div class="layui-upload-list">
+                                            <img class="layui-upload-img" id="demo1">
+                                            <p id="demoText"></p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="pw" class="col-sm-2 control-label">密码</label>
+                                    <div class="col-sm-10">
+                                        <input type="pw" class="form-control" id="pw" placeholder="pw" name="user_pw" required>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">添加</button>
+                                <button type="reset" class="btn layui-btn-danger">重置</button>
+
+
+                            </form>
+                        </main>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+<!-- contact area End -->
+
+
+
+<!-- back to top area start -->
+<div class="back-to-top">
+    <span class="back-top"><i class="fa fa-angle-double-up"></i></span>
+</div>
+<!-- back to top area end -->
+
+<script>
+    layui.use('upload', function(){
+        var $ = layui.jquery
+            ,upload = layui.upload;
+
+        //普通图片上传
+        var uploadInst = upload.render({
+            elem: '#book_img_load'
+            ,url: '/addUserPhoto/' //改成您自己的上传接口
+
+            ,before: function(obj){
+                //预读本地文件示例，不支持ie8
+                obj.preview(function(index, file, result){
+                    $('#demo1').attr('src', result); //图片链接（base64）
+                });
+            }
+            ,done: function(res){
+                //如果上传失败
+                if(res.code > 0){
+                    return layer.msg('上传失败');
+                }
+                //上传成功
+            }
+            ,error: function(){
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function(){
+                    uploadInst.upload();
+                });
+            }
+
+        });
+
+    });
+</script>
+
+<!-- all plugins here -->
+<div th:replace="~{commons/commons::js}"></div>
+</body>
+</html>

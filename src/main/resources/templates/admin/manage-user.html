@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{commons/commons::head}"></div>
+<body>
+
+<!-- preloader area start -->
+<div class="preloader" id="preloader">
+    <div class="preloader-inner">
+        <div class="spinner">
+            <div class="dot1"></div>
+            <div class="dot2"></div>
+        </div>
+    </div>
+</div>
+<!-- search popup area start -->
+<div class="search-popup" id="search-popup">
+    <form action="../index.html" class="search-form">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search.....">
+        </div>
+        <button type="submit" class="submit-btn"><i class="fa fa-search"></i></button>
+    </form>
+</div>
+<!-- //. search Popup -->
+<div class="body-overlay" id="body-overlay"></div>
+
+<!-- topbar end-->
+<div class="topbar-area">
+    <div th:replace="~{commons/admin-commons::topbarend}"></div>
+</div>
+<!-- topbar end-->
+
+
+
+<!-- navbar start -->
+<div class="navbar-area">
+    <div th:insert="~{commons/admin-commons::topbar}"></div>
+</div>
+<!-- navbar end -->
+
+<!-- contact area Start -->
+<div class="contact-area pd-top-50 pd-bottom-80">
+    <div class="container">
+        <div class="row">
+            <div class="breadcrumb-inner">
+                <i class="fa fa-home"></i>
+                <ul class="page-list">
+                    <li><a href="@{index.html">主页</a></li>
+                    <li>用户管理</li>
+                </ul>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <main role="main" class="col-md-12 ml-sm-auto col-lg-13 pt-3 px-4">
+                        <h2 ><a class="btn btn-sm btn-success" th:href="@{/toAddUser}" >添加用户</a></h2>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-sm">
+                                <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>昵称</th>
+                                    <th>性别</th>
+                                    <th>出生日期</th>
+                                    <th>电话号码</th>
+                                    <th>邮箱</th>
+                                    <th>图像</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="u:${catchuser}">
+                                    <td th:text="${u.getUser_id()}"> </td>
+                                    <td th:text="${u.getUser_name()}"> </td>
+                                    <td th:text="${u.getUser_sex()}"> </td>
+                                    <td th:text="${u.getUser_birth()}"> </td>
+                                    <td th:text="${u.getUser_phone()}"> </td>
+                                    <td th:text="${u.getUser_email()}"> </td>
+                                    <td th:text="${u.getUser_image()}"> </td>
+                                    <td>
+                                        <a class="layui-btn layui-btn-sm" th:href="@{/toUpUser/{id}(id=${u.getUser_id()})}">编辑</a>
+                                        <a class="layui-btn layui-btn-sm layui-btn-danger" th:href="@{/toDelUser/{id}(id=${u.getUser_id()})}">删除</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- contact area End -->
+
+
+
+<!-- back to top area start -->
+<div class="back-to-top">
+    <span class="back-top"><i class="fa fa-angle-double-up"></i></span>
+</div>
+<!-- back to top area end -->
+
+
+<!-- all plugins here -->
+<script th:src="@{~/assets/js/vendor.js}"></script>
+<script th:src="@{~/assets/js/jquery.magnific-popup.min.js}"></script>
+<!-- main js  -->
+<script th:src="@{~/assets/js/main.js}"></script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{commons/commons::head}"></div>
+<body>
+
+<!-- preloader area start -->
+<div class="preloader" id="preloader">
+    <div class="preloader-inner">
+        <div class="spinner">
+            <div class="dot1"></div>
+            <div class="dot2"></div>
+        </div>
+    </div>
+</div>
+<!-- search popup area start -->
+<div class="search-popup" id="search-popup">
+    <form action="../index.html" class="search-form">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search.....">
+        </div>
+        <button type="submit" class="submit-btn"><i class="fa fa-search"></i></button>
+    </form>
+</div>
+<!-- //. search Popup -->
+<div class="body-overlay" id="body-overlay"></div>
+
+<!-- topbar end-->
+<div class="topbar-area">
+    <div th:replace="~{commons/admin-commons::topbarend}"></div>
+</div>
+<!-- topbar end-->
+
+
+
+<!-- navbar start -->
+<div class="navbar-area">
+    <div th:insert="~{commons/admin-commons::topbar}"></div>
+</div>
+<!-- navbar end -->
+
+<!-- contact area Start -->
+<div class="contact-area pd-top-50 pd-bottom-80">
+    <div class="container">
+        <div class="row">
+            <div class="breadcrumb-inner">
+                <i class="fa fa-home"></i>
+                <ul class="page-list">
+                    <li><a href="@{index.html">主页</a></li>
+                    <li>购物车</li>
+                </ul>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <main role="main" class="col-md-10 ml-sm-auto col-lg-11 pt-3 px-4">
+                        <div class="table-responsive">
+                            <h4 class="title" style="font-size:120%;">&nbsp;订单号: &nbsp;&nbsp;[[${orderNow.getOrder_id()}]]</h4>
+                            <h4 class="title" style="font-size:120%;">&nbsp;客户: &nbsp;&nbsp;&nbsp;[[${orderNow.getUser_name()}]]</h4>
+                            <h4 class="title" style="font-size:120%;">&nbsp;下单时间: &nbsp;[[${orderNow.getOrder_time()}]]</h4>
+                            <h4 class="title" style="font-size:120%;">&nbsp;商品数: &nbsp;&nbsp;[[${orderNow.getOrder_total()}]]</h4>
+
+                            <form >
+                                <table class="table table-striped table-sm">
+                                    <thead>
+                                    <tr>
+                                        <th>商品名称</th>
+                                        <th>数量</th>
+                                        <th>单价</th>
+                                        <th>合计</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="o:${orderBooksNow}">
+                                        <td th:text="${o.getBook_name()}" name="book_id" > </td>
+                                        <td th:text="${o.getCart_count()}" name="book_id" > </td>
+                                        <td th:text="${o.getBook_price()}" name="book_id" > </td>
+                                        <td th:text="${o.getCart_price()}" name="book_name"> </td>
+                                    </tr>
+                                    </tbody>
+
+                                </table>
+
+                            </form>
+                            <h4 class="title" style="font-size:120%;">&nbsp;订单实付金额:&nbsp;[[${orderNow.getOrder_price()}]]</h4>
+
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- contact area End -->
+
+
+
+<!-- back to top area start -->
+<div class="back-to-top">
+    <span class="back-top"><i class="fa fa-angle-double-up"></i></span>
+</div>
+<!-- back to top area end -->
+
+
+<!-- all plugins here -->
+<div th:replace="~{commons/commons::js}"></div>
+</body>
+</html>

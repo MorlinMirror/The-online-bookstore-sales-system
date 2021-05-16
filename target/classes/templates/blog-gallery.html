@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{commons/commons::head}"></div>
+<body>
+
+<div th:replace="~{commons/commons::search}"></div>
+
+    <!-- topbar end-->
+    <div class="topbar-area">
+        <div th:replace="~{commons/commons::topbarend}"></div>
+    </div>
+    <!-- topbar end-->
+
+
+
+    <!-- navbar start -->
+    <div class="navbar-area">
+        <div th:insert="~{commons/commons::topbar}"></div>
+    </div>
+    <!-- navbar end -->
+    
+    <!-- blog-gallery area Start -->
+    <div class="blog-gallery-area pd-top-50 pd-bottom-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <p class="category"><i class="fa fa-home"></i>  主页 / 书籍分类</p>
+                </div>
+            </div>
+            <!--本体-->
+            <div class="row">
+                <div class="col-lg-12">
+                    <!--<div class="blog-gallery-tab d-inline-block" >-->
+                        <!--<ul class="nav nav-tabs">-->
+                    <!--<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">-->
+                    <div class="layui-tab layui-tab-card" style="width: 850px;">
+                        <ul class="layui-tab-title">
+                            <li th:each="bs,bs1:${gbookSort}"><a th:href="@{/getBook/{id}(id=${bs.getSort_id()})}" th:text="${bs.getSort_name()}"
+                                  th:style="${bs.getSort_id() eq getid}?'color: red'"></a></li>
+                        </ul>
+                    </div>
+                    <div class="top-news-tab-content tab-content" >
+                            <div class="row justify-content-center" >
+                        <!--<div class="layui-tab-content" style="height: 100px;">-->
+                                <th:block th:each="b,b1:${gbooksAll}">
+                                <div  class="col-lg-4 col-md-6">
+                                    <div class="single-post-wrap" >
+                                        <div class="thumb">
+                                            <a th:href="@{/getOneBook/{id}(id=${b.getBook_id()})}">
+                                                <img width="100%" height="100%" th:src="${b.getBook_image()}" alt="img"></a>
+                                            <a class="tag" th:href="@{/getOneBook/{id}(id=${b.getBook_id()})}" th:text="${b.getBook_name()}">Travel</a>
+                                        </div>
+                                        <h6><a th:href="@{/getOneBook/{id}(id=${b.getBook_id()})}" th:text="${b.getBook_outline()}"></a></h6>
+                                        <div class="meta">
+                                            <a href="#" class="author">
+                                                <img src="/assets/img/author/f1.png" alt="img" >
+                                                [[${b.getBook_author()}]]
+                                            </a>
+                                        </div>
+                                        <div class="meta float-right">
+                                            <div class="date">
+                                                <i class="fa fa-clock-o" th:text="${b.getBook_time()}"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                </th:block>
+                            </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!--外体-->
+
+
+        </div>
+    </div> 
+    <!-- blog-gallery area End -->
+
+
+
+    <!-- back to top area start -->
+    <div class="back-to-top">
+        <span class="back-top"><i class="fa fa-angle-double-up"></i></span>
+    </div>
+    <!-- back to top area end -->
+
+<script>
+    layui.use('element', function(){
+        var $ = layui.jquery
+            ,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+        $('.site-demo-active').on('click', function(){
+            var othis = $(this), type = othis.data('type');
+            active[type] ? active[type].call(this, othis) : '';
+        });
+
+        //Hash地址的定位
+        var layid = location.hash.replace(/^#test=/, '');
+        element.tabChange('test', layid);
+
+        element.on('tab(test)', function(elem){
+            location.hash = 'test='+ $(this).attr('lay-id');
+        });
+
+    });
+</script>
+
+
+
+    <!-- all plugins here -->
+    <div th:replace="~{commons/commons::js}"></div>
+</body>
+</html>

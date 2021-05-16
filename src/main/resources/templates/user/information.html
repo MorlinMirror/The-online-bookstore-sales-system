@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="unixstamp=${#dates.createNow().time}">
+<div th:replace="~{commons/commons::head}"></div>
+<body>
+
+<div th:replace="~{commons/commons::search}"></div>
+
+<!-- topbar end-->
+<div class="topbar-area">
+    <div th:replace="~{commons/commons::topbarend}"></div>
+</div>
+<!-- topbar end-->
+
+
+
+<!-- navbar start -->
+<div class="navbar-area">
+    <div th:insert="~{commons/commons::topbar}"></div>
+</div>
+<!-- navbar end -->
+
+<!-- contact area Start -->
+<div class="contact-area pd-top-50 pd-bottom-80">
+    <div class="container">
+        <div class="row">
+            <div class="breadcrumb-inner">
+                <i class="fa fa-home"></i>
+                <ul class="page-list">
+                    <li><a href="@{index.html">主页</a></li>
+                    <li>修改书籍</li>
+                </ul>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                        <form th:action="@{/toUpUserByUser}" method="post">
+                            <div class="align-content-center" ><h4 th:text="${msg}"></h4></div>
+                            <div class="row">
+                                <div class="col-xl-5">
+                                    <div class="form-group">
+                                        <label for="id" class="col-sm-2 control-label"> 编号</label>
+                                        <div class="col-sm-10">
+                                            <input readonly type="text" class="form-control" id="id" name="user_id" th:value="${session.loginId}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-5">
+                                    <div class="form-group">
+                                        <!--<label for="inputprice3" class="col-sm-2 control-label">头像</label>-->
+                                        <!--<div class="col-sm-10">-->
+                                            <!--<input type="text" class="form-control" id="inputprice3"-->
+                                                   <!--name="user_image" th:value="${oneuserbyuser.getUser_image()}">-->
+                                        <!--</div>-->
+                                        <button type="button" class="layui-btn" id="book_img_load" >上传头像</button>
+                                        <div class="layui-upload-list">
+                                            <img width="20%" height="20%" class="layui-upload-img" id="demo1" th:src="${oneuserbyuser.getUser_image()}">
+                                            <p id="demoText"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="book_isbn" class="col-sm-2 control-label">名称</label>
+                                <div class="col-sm-10">
+                                    <input  required type="text" class="form-control" id="book_isbn" name="user_name" th:value="${oneuserbyuser.getUser_name()}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <lable>性别</lable><br>
+                                <div class="form-check form-check-inline">
+                                    <input th:checked="${oneuserbyuser.getUser_sex().equals('男')}" class="form-check-input" type="radio" name="user_sex" value="男">
+                                    <lable class="form-check-label">男</lable>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input th:checked="${oneuserbyuser.getUser_sex().equals('女')}" class="form-check-input" type="radio" name="user_sex" value="女">
+                                    <lable class="form-check-label">女</lable>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputauthor3" class="col-sm-2 control-label">出生日期</label>
+                                <div class="col-sm-10">
+                                    <input type="date" class="form-control" id="inputauthor3"
+                                           name="user_birth" th:value="${oneuserbyuser.getUser_birth()}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputpub3" class="col-sm-2 control-label">手机号</label>
+                                <div class="col-sm-10">
+                                    <input th:required="${not #strings.isEmpty(oneuserbyuser.getUser_phone())}"
+                                           type="text" class="form-control" id="inputpub3"
+                                           name="user_phone" th:value="${oneuserbyuser.getUser_phone()}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="book_num" class="col-sm-2 control-label">邮箱</label>
+                                <div class="col-sm-10">
+                                    <input th:required="${not #strings.isEmpty(oneuserbyuser.getUser_email())}"
+                                           type="email" class="form-control" id="book_num"
+                                           name="user_email" th:value="${oneuserbyuser.getUser_email()}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputimage3" class="col-sm-2 control-label">密码</label>
+                                <div class="col-sm-10">
+                                    <input type="password" class="form-control" id="inputimage3"
+                                           name="user_pw" th:value="${oneuserbyuser.getUser_pw()}" required>
+                                </div>
+                            </div>
+
+
+                            <button type="submit" class="btn btn-primary">修改</button>
+                            <button type="reset" class="btn layui-btn-danger">重置</button>
+
+
+                        </form>
+                    </main>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- contact area End -->
+
+
+
+<!-- back to top area start -->
+<div class="back-to-top">
+    <span class="back-top"><i class="fa fa-angle-double-up"></i></span>
+</div>
+<!-- back to top area end -->
+
+<script>
+    layui.use('upload', function(){
+        var $ = layui.jquery
+            ,upload = layui.upload;
+
+        //普通图片上传
+        var uploadInst = upload.render({
+            elem: '#book_img_load'
+            ,url: '/upUserPhotoByUser/' //改成您自己的上传接口
+
+            ,before: function(obj){
+                //预读本地文件示例，不支持ie8
+                obj.preview(function(index, file, result){
+                    $('#demo1').attr('src', result); //图片链接（base64）
+                });
+            }
+            ,done: function(res){
+                //如果上传失败
+                if(res.code > 0){
+                    return layer.msg('上传失败');
+                }
+                //上传成功
+            }
+            ,error: function(){
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function(){
+                    uploadInst.upload();
+                });
+            }
+
+        });
+
+    });
+</script>
+
+<!-- all plugins here -->
+<div th:replace="~{commons/commons::js}"></div>
+</body>
+</html>
